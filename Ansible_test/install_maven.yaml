@@ -1,0 +1,8 @@
+---
+- hosts: node
+  become: yes
+  tasks:
+  - yum:
+      name: maven
+      state: present
+

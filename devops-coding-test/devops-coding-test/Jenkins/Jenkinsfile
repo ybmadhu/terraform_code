@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Initialize') {
+            steps {
+                // Checkout the git repository
+                checkout([$class: 'GitSCM', 
+                          branches: [[name: '*/master']], 
+                          userRemoteConfigs: [[url: 'https://github.com/somegitrepo.git']]])
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Execute Maven build command
+                sh 'mvn clean install'
+            }
+        }
+    }
+
+    post {
+        always {
+            // Display a message after the build is complete
+            echo 'Build is complete'
+        }
+    }
+}
+
